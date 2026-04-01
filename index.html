@@ -230,13 +230,11 @@
     // ============================================================
     // Configuration
     // ============================================================
-    // อัปเดต API_URL เรียบร้อยแล้ว
     const API_URL = 'https://script.google.com/macros/s/AKfycbyt3mtT92mA8i-oA-N-xc-vJ2N1qTYFQHM5sw2yJmP1dw9dWk9qs4noiK0j3xxxb8FxJw/exec';
-    
     let isAdmin = false;
     let isPublicView = false;
     let projects = [];
-    let activities =[];
+    let activities = [];
     let payments =[];
     let refreshInterval = null;
     let deptChartInstance = null;
@@ -272,13 +270,14 @@
             const res = await fetch(API_URL + '?action=getDashboard');
             const json = await res.json();
             if (json.success) {
-                // หากไม่มีข้อมูลใน Google Sheets เลย ให้โหลด Demo Data มาแสดง
-                if (json.data.projects.length === 0) {
-                    if (!demoLoaded) { loadDemoData(); demoLoaded = true; }
+                projects = json.data.projects;
+                activities = json.data.activities;
+                payments = json.data.payments;
+                
+                // ถ้าไม่มีข้อมูลใน Google Sheets เลยให้แสดงข้อมูลจำลอง
+                if(projects.length === 0) {
+                    if(!demoLoaded) { loadDemoData(); demoLoaded = true; }
                 } else {
-                    projects = json.data.projects;
-                    activities = json.data.activities;
-                    payments = json.data.payments;
                     updateUI();
                 }
             }
@@ -289,6 +288,7 @@
     }
 
     function loadDemoData() {
+        // นำโครงการอาหารกลางวัน (id:37) ออกแล้ว
         projects =[
             {id:1,project_code:"1/2569",project_name:"โครงการส่งเสริมพัฒนาหลักสูตรสถานศึกษาและหลักสูตรท้องถิ่น",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"พัฒนาหลักสูตรสถานศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:2,project_code:"2/2569",project_name:"โครงการพัฒนาระบบประกันคุณภาพสถานศึกษาและมาตรฐานการศึกษา",department:"บริหารงานวิชาการ",budget_total:3500,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"พัฒนาระบบประกันคุณภาพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
@@ -326,7 +326,6 @@
             {id:34,project_code:"38/2569",project_name:"โครงการพัฒนาห้องพยาบาลปลอดภัย",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางจันทร์มา ทำนุ",description:"ห้องพยาบาลปลอดภัย",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:35,project_code:"39/2569",project_name:"โครงการโรงเรียนส่งเสริมสุขภาพ",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"ส่งเสริมสุขภาพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:36,project_code:"40/2569",project_name:"โครงการพัฒนาระบบสำนักงานและธุรการโรงเรียน",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"พัฒนาระบบสำนักงาน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:37,project_code:"41/2569",project_name:"โครงการอาหารกลางวัน",department:"บริหารงานทั่วไป",budget_total:1350800,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"อาหารกลางวันนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:38,project_code:"42/2569",project_name:"โครงการจัดหาและซ่อมบำรุง วัสดุ อุปกรณ์ ครุภัณฑ์ทางการศึกษา",department:"บริหารงานงบประมาณ",budget_total:50000,owner:"ว่าที่ร.ต.ปรีดิพัทธ์ รักพรม",description:"จัดหาและซ่อมบำรุงครุภัณฑ์",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:39,project_code:"43/2569",project_name:"โครงการวัสดุสำนักงาน",department:"บริหารงานงบประมาณ",budget_total:60000,owner:"นางนพมาศ นวลศิริ",description:"จัดหาวัสดุสำนักงาน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
             {id:40,project_code:"44/2569",project_name:"โครงการตรวจสอบภายในและบริหารความเสี่ยง",department:"บริหารงานงบประมาณ",budget_total:1500,owner:"นางนพมาศ นวลศิริ",description:"ตรวจสอบภายใน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
@@ -409,7 +408,7 @@
     }
 
     function updateDeptFilter() {
-        const depts = [...new Set(projects.map(p => p.department).filter(Boolean))].sort();
+        const depts =[...new Set(projects.map(p => p.department).filter(Boolean))].sort();
         const select = document.getElementById('deptFilter');
         const currentVal = select.value;
         select.innerHTML = '<option value="">ทุกกลุ่มงาน</option>';
@@ -433,7 +432,7 @@
     }
 
     function updateYearFilter() {
-        const years = [...new Set(projects.map(p => p.fiscal_year || '2569'))].sort();
+        const years =[...new Set(projects.map(p => p.fiscal_year || '2569'))].sort();
         const select = document.getElementById('yearFilter');
         const currentVal = select.value;
         select.innerHTML = '<option value="">ทุกปีงบประมาณ</option>';
@@ -458,9 +457,12 @@
         updateDeptChart(list);
         updateTopProjectsChart(list);
     }
-       
+
     function updateDeptChart(list) {
-        const API_URL = 'https://script.google.com/macros/s/AKfycbyt3mtT92mA8i-oA-N-xc-vJ2N1qTYFQHM5sw2yJmP1dw9dWk9qs4noiK0j3xxxb8FxJw/exec';
+        const deptData = {};
+        list.forEach(p => {
+            const dept = p.department || 'อื่นๆ';
+            deptData[dept] = (deptData[dept] || 0) + Number(p.budget_total);
         });
 
         const labels = Object.keys(deptData);
@@ -471,7 +473,7 @@
         const ctx = document.getElementById('deptChart').getContext('2d');
         deptChartInstance = new Chart(ctx, {
             type: 'doughnut',
-            data: { labels, datasets:[{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
+            data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
             options: {
                 responsive: true, maintainAspectRatio: false,
                 plugins: {
@@ -554,7 +556,7 @@
         const data = { action: 'updateProject', id: projectId, status: newStatus };
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
             } catch (err) { console.error(err); }
         }
@@ -899,7 +901,7 @@
 
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
             } catch (err) { console.error(err); }
         }
@@ -950,7 +952,7 @@
 
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
                 const json = await res.json();
                 if (!json.success) throw new Error(json.error);
@@ -1023,7 +1025,7 @@
 
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(paymentData) });
                 const json = await res.json(); if (!json.success) throw new Error(json.error);
             } catch (err) {
@@ -1079,7 +1081,7 @@
 
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
                 const json = await res.json(); if (!json.success) throw new Error(json.error);
             } catch (err) { btn.disabled = false; btn.textContent = 'บันทึก'; return; }
@@ -1101,7 +1103,7 @@
     async function deletePaymentFn(paymentId, projectId) {
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'deletePayment', id: paymentId }) });
                 const json = await res.json(); if (!json.success) throw new Error(json.error);
             } catch (err) { alert('เกิดข้อผิดพลาด: ' + err.message); return; }
@@ -1129,7 +1131,7 @@
         const pin = document.getElementById('pinInput').value;
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'login', pin }) });
                 const json = await res.json();
                 if (!json.success) { document.getElementById('loginError').classList.remove('hidden'); return; }
@@ -1229,7 +1231,7 @@
 
         if (API_URL) {
             try {
-                // แก้ไขตรงนี้เป็น text/plain;charset=utf-8
+                // แก้ไข Headers เป็น text/plain;charset=utf-8 เพื่อแก้ CORS "Failed to fetch"
                 const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(paymentData) });
                 const json = await res.json(); if (!json.success) throw new Error(json.error);
             } catch (err) {
@@ -1293,7 +1295,7 @@
     // ============================================================
     function startAutoRefresh() {
         if (refreshInterval) clearInterval(refreshInterval);
-        refreshInterval = setInterval(fetchData, 5000); // อัปเดตข้อมูลทุก 5 วินาที
+        refreshInterval = setInterval(fetchData, 5000);
     }
 
     document.addEventListener('keydown', (e) => {
