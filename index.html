@@ -230,7 +230,7 @@
     // ============================================================
     // Configuration
     // ============================================================
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyt3mtT92mA8i-oA-N-xc-vJ2N1qTYFQHM5sw2yJmP1dw9dWk9qs4noiK0j3xxxb8FxJw/exec?action=getDashboard';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyt3mtT92mA8i-oA-N-xc-vJ2N1qTYFQHM5sw2yJmP1dw9dWk9qs4noiK0j3xxxb8FxJw/exec';
     let isAdmin = false;
     let isPublicView = false;
     let projects = [];
@@ -281,79 +281,143 @@
 
     function loadDemoData() {
         projects = [
-            {id:1,project_code:"1/2569",project_name:"โครงการส่งเสริมพัฒนาหลักสูตรสถานศึกษาและหลักสูตรท้องถิ่น",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"พัฒนาหลักสูตรสถานศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:2,project_code:"2/2569",project_name:"โครงการพัฒนาระบบประกันคุณภาพสถานศึกษาและมาตรฐานการศึกษา",department:"บริหารงานวิชาการ",budget_total:3500,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"พัฒนาระบบประกันคุณภาพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:3,project_code:"3/2569",project_name:"โครงการพัฒนาคุณภาพวิชาการและกลุ่มสาระการเรียนรู้",department:"บริหารงานวิชาการ",budget_total:5000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"พัฒนาคุณภาพวิชาการ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:4,project_code:"4/2569",project_name:"โครงการยกระดับผลสัมฤทธิ์ทางการเรียน",department:"บริหารงานวิชาการ",budget_total:17000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"ยกระดับผลสัมฤทธิ์ทางการเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:5,project_code:"5/2569",project_name:"โครงการโรงเรียนคุณธรรม",department:"บริหารงานวิชาการ",budget_total:6500,owner:"นางสาวเพ็ญนภา วันทอง",description:"ส่งเสริมคุณธรรมจริยธรรม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:6,project_code:"6/2569",project_name:"โครงการส่งเสริมการวิจัย นวัตกรรมและการผลิตสื่อการเรียนรู้",department:"บริหารงานวิชาการ",budget_total:20000,owner:"นางสาวเพ็ญนภา วันทอง",description:"ส่งเสริมการวิจัยและนวัตกรรม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:7,project_code:"7/2569",project_name:"โครงการโรงเรียนสุจริต",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวเพ็ญนภา วันทอง",description:"ส่งเสริมความสุจริต",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:8,project_code:"8/2569",project_name:"โครงการแนะแนว ตามน้องกลับมาเรียน",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวเพ็ญนภา วันทอง",description:"แนะแนวและติดตามนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:9,project_code:"9/2569",project_name:"โครงการส่งเสริมศักยภาพผู้เรียนและการแข่งขันทักษะทางวิชาการ",department:"บริหารงานวิชาการ",budget_total:70000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"ส่งเสริมศักยภาพผู้เรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:10,project_code:"10/2569",project_name:"โครงการส่งเสริมกิจกรรมพัฒนาผู้เรียน",department:"บริหารงานวิชาการ",budget_total:125000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"ส่งเสริมกิจกรรมพัฒนาผู้เรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:11,project_code:"12/2569",project_name:"โครงการพัฒนาส่งเสริมนักเรียนเรียนรวม",department:"บริหารงานวิชาการ",budget_total:2000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"พัฒนานักเรียนเรียนรวม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:12,project_code:"13/2569",project_name:"โครงการจัดทำแผนพัฒนาการศึกษาและแผนปฏิบัติการประจำปี",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"จัดทำแผนพัฒนาการศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:13,project_code:"14/2569",project_name:"โครงการพัฒนาระบบงานทะเบียน ระบบวัดผลและประเมินผลการศึกษา",department:"บริหารงานวิชาการ",budget_total:15000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"พัฒนาระบบงานทะเบียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:14,project_code:"15/2569",project_name:"โครงการพัฒนางานสหกรณ์โรงเรียนบ้านผึ้ง",department:"บริหารงานวิชาการ",budget_total:3000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"พัฒนางานสหกรณ์โรงเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:15,project_code:"16/2569",project_name:"โครงการส่งเสริมศิลปะนาฏศิลป์วัฒนธรรมไทยและภูมิปัญญาท้องถิ่น",department:"บริหารงานวิชาการ",budget_total:30000,owner:"นางมาลินี ทองแสน",description:"ส่งเสริมศิลปะวัฒนธรรม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:16,project_code:"17/2569",project_name:"โครงการห้องเรียนพหุปัญญา",department:"บริหารงานวิชาการ",budget_total:95000,owner:"นายถวัลย์ ถนัดทาง",description:"ห้องเรียนพหุปัญญา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:18,project_code:"19/2569",project_name:"โครงการขับเคลื่อนการพัฒนาสมรรถนะผู้เรียนตามมาตรฐานสากล (PISA)",department:"บริหารงานวิชาการ",budget_total:3000,owner:"นางสาวนิภาพร คำเพราะ",description:"พัฒนาสมรรถนะ PISA",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:19,project_code:"20/2569",project_name:"โครงการห้องเรียนคุณภาพ",department:"บริหารงานวิชาการ",budget_total:65000,owner:"นางสาวนิภาพร คำเพราะ",description:"พัฒนาห้องเรียนคุณภาพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:20,project_code:"21/2569",project_name:"โครงการพัฒนาทักษะด้านศิลปะดนตรีกีฬา",department:"บริหารงานวิชาการ",budget_total:58000,owner:"ว่าที่ร.ต.ปรีดิพัทธ์ รักพรม",description:"พัฒนาทักษะศิลปะ ดนตรี กีฬา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:21,project_code:"23/2569",project_name:"โครงการส่งเสริมการจัดการศึกษาปฐมวัย",department:"บริหารงานวิชาการ",budget_total:22000,owner:"นางนพมาศ นวลศิริ",description:"ส่งเสริมการศึกษาปฐมวัย",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:22,project_code:"24/2569",project_name:"โครงการบ้านนักวิทยาศาสตร์น้อย (ระดับปฐมวัย)",department:"บริหารงานวิชาการ",budget_total:3000,owner:"นางนพมาศ นวลศิริ",description:"บ้านนักวิทยาศาสตร์น้อย ปฐมวัย",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:23,project_code:"27/2569",project_name:"โครงการสถานศึกษาสีขาว ปลอดยาเสพติดและอบายมุข",department:"บริหารงานทั่วไป",budget_total:12000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"ป้องกันยาเสพติด",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:24,project_code:"28/2569",project_name:"โครงการพัฒนาระบบดูแลช่วยเหลือนักเรียน",department:"บริหารงานทั่วไป",budget_total:4500,owner:"นางสาวณัฏยา เงาศรี",description:"ดูแลช่วยเหลือนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:25,project_code:"29/2569",project_name:"โครงการพัฒนาคณะกรรมการสถานศึกษา",department:"บริหารงานบุคคล",budget_total:2545,owner:"นางสาวณัฏยา เงาศรี",description:"พัฒนาคณะกรรมการสถานศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:26,project_code:"30/2569",project_name:"โครงการพัฒนาสารสนเทศและสื่อสร้างสรรค์",department:"บริหารงานทั่วไป",budget_total:15000,owner:"นางสาวสุดารัตน์ สร้อยสนธิ์",description:"พัฒนาสารสนเทศ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:27,project_code:"31/2569",project_name:"โครงการประชาสัมพันธ์โรงเรียนบ้านผึ้ง",department:"บริหารงานทั่วไป",budget_total:2000,owner:"นางสาวสุดารัตน์ สร้อยสนธิ์",description:"ประชาสัมพันธ์โรงเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:28,project_code:"32/2569",project_name:"โครงการพัฒนาทัศนูปกรณ์และเทคโนโลยีเพื่อการศึกษา",department:"บริหารงานทั่วไป",budget_total:60000,owner:"นางสาวสุดารัตน์ สร้อยสนธิ์",description:"พัฒนาเทคโนโลยีการศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:29,project_code:"33/2569",project_name:"โครงการโรงเรียนปลอดขยะ",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางสาวนิภาพร คำเพราะ",description:"โรงเรียนปลอดขยะ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:30,project_code:"34/2569",project_name:"โครงการส่งเสริมความประพฤติและวินัยนักเรียน",department:"บริหารงานทั่วไป",budget_total:1500,owner:"ว่าที่ร.ต.ปรีดิพัทธ์ รักพรม",description:"ส่งเสริมวินัยนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:31,project_code:"35/2569",project_name:"โครงการพัฒนาอาคารสถานที่เพื่อการจัดการเรียนรู้",department:"บริหารงานทั่วไป",budget_total:60000,owner:"นางจันทร์มา ทำนุ",description:"พัฒนาอาคารสถานที่",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:32,project_code:"36/2569",project_name:"โครงการสานสัมพันธ์ชุมชนและเครือข่ายผู้ปกครอง",department:"บริหารงานทั่วไป",budget_total:7000,owner:"นางจันทร์มา ทำนุ",description:"สานสัมพันธ์ชุมชน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:33,project_code:"37/2569",project_name:"โครงการร่วมพัฒนาเครือข่ายคุณภาพการศึกษา",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางจันทร์มา ทำนุ",description:"เครือข่ายคุณภาพการศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:34,project_code:"38/2569",project_name:"โครงการพัฒนาห้องพยาบาลปลอดภัย",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางจันทร์มา ทำนุ",description:"ห้องพยาบาลปลอดภัย",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:35,project_code:"39/2569",project_name:"โครงการโรงเรียนส่งเสริมสุขภาพ",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"ส่งเสริมสุขภาพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:36,project_code:"40/2569",project_name:"โครงการพัฒนาระบบสำนักงานและธุรการโรงเรียน",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"พัฒนาระบบสำนักงาน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:38,project_code:"42/2569",project_name:"โครงการจัดหาและซ่อมบำรุง วัสดุ อุปกรณ์ ครุภัณฑ์ทางการศึกษา",department:"บริหารงานงบประมาณ",budget_total:50000,owner:"ว่าที่ร.ต.ปรีดิพัทธ์ รักพรม",description:"จัดหาและซ่อมบำรุงครุภัณฑ์",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:39,project_code:"43/2569",project_name:"โครงการวัสดุสำนักงาน",department:"บริหารงานงบประมาณ",budget_total:60000,owner:"นางนพมาศ นวลศิริ",description:"จัดหาวัสดุสำนักงาน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:40,project_code:"44/2569",project_name:"โครงการตรวจสอบภายในและบริหารความเสี่ยง",department:"บริหารงานงบประมาณ",budget_total:1500,owner:"นางนพมาศ นวลศิริ",description:"ตรวจสอบภายใน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:41,project_code:"45/2569",project_name:"โครงการพัฒนาระบบสาธารณูปโภค",department:"บริหารงานงบประมาณ",budget_total:50000,owner:"นางนพมาศ นวลศิริ",description:"พัฒนาสาธารณูปโภค",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:42,project_code:"46/2569",project_name:"โครงการระดมทุนเพื่อการศึกษา",department:"บริหารงานงบประมาณ",budget_total:10000,owner:"นางนพมาศ นวลศิริ",description:"ระดมทุนเพื่อการศึกษา",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:43,project_code:"47/2569",project_name:"โครงการพัฒนางานงบประมาณ การเงินบัญชีและพัสดุ",department:"บริหารงานงบประมาณ",budget_total:2000,owner:"นางนพมาศ นวลศิริ",description:"พัฒนาระบบการเงิน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:44,project_code:"48/2569",project_name:"โครงการสวัสดิการและขวัญกำลังใจบุคลากร",department:"บริหารงานบุคคล",budget_total:35000,owner:"นางมาลินี ทองแสน",description:"สวัสดิการบุคลากร",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:45,project_code:"49/2569",project_name:"โครงการบริหารจัดการจัดสรรอัตรากำลัง",department:"บริหารงานบุคคล",budget_total:132000,owner:"นางมาลินี ทองแสน",description:"จัดสรรอัตรากำลัง",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:46,project_code:"50/2569",project_name:"โครงการโรงเรียนประชารัฐ (Connext ed)",department:"บริหารงานบุคคล",budget_total:1000,owner:"นางมาลินี ทองแสน",description:"โรงเรียนประชารัฐ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:47,project_code:"51/2569",project_name:"โครงการส่งเสริมศักยภาพครูและบุคลากรทางการศึกษาเพื่อพัฒนาครูสู่มืออาชีพ",department:"บริหารงานบุคคล",budget_total:55000,owner:"นางสาวณัฏยา เงาศรี",description:"พัฒนาครูสู่มืออาชีพ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:48,project_code:"53/2569",project_name:"โครงการกิจกรรมชุมชนแห่งการเรียนรู้ทางวิชาชีพ PLC",department:"บริหารงานบุคคล",budget_total:4000,owner:"นางสาวสุดารัตน์ สร้อยสนธิ์",description:"ชุมชนแห่งการเรียนรู้ PLC",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:49,project_code:"54/2569",project_name:"โครงการพัฒนาระบบการบริหารจัดการศึกษา",department:"บริหารงานบุคคล",budget_total:5000,owner:"นายถวัลย์ ถนัดทาง",description:"พัฒนาระบบบริหาร",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:50,project_code:"55/2569",project_name:"โครงการพัฒนากิจกรรมลูกเสือเนตรนารี",department:"บริหารงานวิชาการ",budget_total:30000,owner:"ว่าที่ร.ต.ปรีดิพัทธ์ รักพรม",description:"กิจกรรมลูกเสือ",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:51,project_code:"56/2569",project_name:"โครงการโรงเรียนปลอดภัย",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"โรงเรียนปลอดภัย",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:52,project_code:"57/2569",project_name:"โครงการส่งเสริมพัฒนาอาชีพและยุวเกษตรกร",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวอรวรรณ บุญจันทร์",description:"ยุวเกษตรกร",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:53,project_code:"58/2569",project_name:"โครงการงานปฏิคมและการต้อนรับ",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางจันทร์มา ทำนุ",description:"งานปฏิคม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:54,project_code:"59/2569",project_name:"โครงการส่งเสริมกิจการนักเรียน",department:"บริหารงานทั่วไป",budget_total:4000,owner:"นางจันทร์มา ทำนุ",description:"ส่งเสริมกิจการนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:55,project_code:"60/2569",project_name:"โครงการพัฒนาแหล่งเรียนรู้ในโรงเรียน",department:"บริหารงานวิชาการ",budget_total:60000,owner:"นางสาววิจิตรา ไชยพิมพ์",description:"พัฒนาแหล่งเรียนรู้",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:56,project_code:"61/2569",project_name:"โครงการบ้านนักวิทยาศาสตร์น้อย (ประถมศึกษา)",department:"บริหารงานวิชาการ",budget_total:5000,owner:"นางสาววิจิตรา ไชยพิมพ์",description:"นักวิทยาศาสตร์น้อย ประถม",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
-            {id:57,project_code:"62/2569",project_name:"โครงการโรงเรียนอีโคสคูล (Eco School)",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นายสุริยา มนัสศิลา",description:"โรงเรียนอีโคสคูล",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:1,project_code:"1/2569",project_name:"โครงการส่งเสริมพัฒนาหลักสูตรสถานศึกษาและหลักสูตรท้องถิ่น",department:"บริหารงานวิชาการ",budget_total:2000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:2,project_code:"2/2569",project_name:"โครงการงานประกันคุณภาพสถานศึกษา",department:"บริหารงานวิชาการ",budget_total:3500,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:3,project_code:"3/2569",project_name:"โครงการพัฒนาคุณภาพวิชาการและกลุ่มสาระการเรียนรู้",department:"บริหารงานวิชาการ",budget_total:22000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:4,project_code:"4/2569",project_name:"โครงการยกระดับผลสัมฤทธิ์ทางการเรียน",department:"บริหารงานวิชาการ",budget_total:20000,owner:"นางสุมิตรา ลิ้มสุวัฒน์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:5,project_code:"5/2569",project_name:"โครงการโรงเรียนคุณธรรม",department:"บริหารงานวิชาการ",budget_total:7000,owner:"นางสาวเพ็ญนภา วันทอง",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:6,project_code:"6/2569",project_name:"โครงการส่งเสริมการวิจัย นวัตกรรมและสื่อการเรียนรู้",department:"บริหารงานวิชาการ",budget_total:13000,owner:"นางสาวเพ็ญนภา วันทอง",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:7,project_code:"7/2569",project_name:"โครงการโรงเรียนสุจริต",department:"บริหารงานวิชาการ",budget_total:500,owner:"นางสาวเพ็ญนภา วันทอง",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:8,project_code:"8/2569",project_name:"โครงการแนะแนว ตามน้องกลับมาเรียน",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวเพ็ญนภา วันทอง",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:9,project_code:"9/2569",project_name:"โครงการส่งเสริมศักยภาพผู้เรียนและการแข่งขันทักษะวิชาการ",department:"บริหารงานวิชาการ",budget_total:90000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:10,project_code:"10/2569",project_name:"โครงการส่งเสริมกิจกรรมพัฒนาผู้เรียน",department:"บริหารงานวิชาการ",budget_total:125000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:11,project_code:"11/2569",project_name:"โครงการพัฒนานักเรียนเรียนรวม",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:12,project_code:"12/2569",project_name:"โครงการนิเทศภายใน",department:"บริหารงานวิชาการ",budget_total:500,owner:"นางสาวธิดารัตน์ ภูนามนา",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:13,project_code:"13/2569",project_name:"โครงการจัดทำแผนพัฒนาคุณภาพการศึกษา",department:"บริหารงานวิชาการ",budget_total:1000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:14,project_code:"14/2569",project_name:"โครงการพัฒนาระบบงานทะเบียน ระบบวัดผลและประเมินผลการศึกษา",department:"บริหารงานวิชาการ",budget_total:15000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:15,project_code:"15/2569",project_name:"โครงการสถานศึกษาสีขาว",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวสุกัญญา ปัญญานนท์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:16,project_code:"16/2569",project_name:"โครงการสวัสดิการและขวัญกำลังใจบุคลากร",department:"บริหารงานบุคคล",budget_total:35000,owner:"นางมาลินี  ทองแสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:17,project_code:"17/2569",project_name:"โครงการบริหารจัดการอัตรากำลัง",department:"บริหารงานบุคคล",budget_total:150000,owner:"นางมาลินี  ทองแสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:18,project_code:"18/2569",project_name:"โครงการโรงเรียนประชารัฐ(connext ed)",department:"บริหารงานบุคคล",budget_total:500,owner:"นางมาลินี  ทองแสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:19,project_code:"19/2569",project_name:"โครงการส่งเสริมศักยภาพครูและบุคลากรทางการศึกษาสู่ครูมืออาชีพ",department:"บริหารงานบุคคล",budget_total:57000,owner:"นางสาวณัฏยา  เงาศรี",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:20,project_code:"20/2569",project_name:"โครงการระบบดูแลช่วยเหลือนักเรียน",department:"บริหารงานทั่วไป",budget_total:3500,owner:"นางสาวณัฏยา  เงาศรี",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:21,project_code:"21/2569",project_name:"โครงการวันสำคัญ",department:"บริหารงานทั่วไป",budget_total:40000,owner:"นางสาวณัฏยา  เงาศรี",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:22,project_code:"22/2569",project_name:"โครงการพัฒนาระบบสารสนเทศและสื่อสร้างสรรค์",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวสุดารัตน์  สร้อยสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:23,project_code:"23/2569",project_name:"โครงการประชาสัมพันธ์โรงเรียน",department:"บริหารงานทั่วไป",budget_total:2000,owner:"นางสาวสุดารัตน์  สร้อยสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:24,project_code:"24/2569",project_name:"โครงการพัฒนาโสตทัศนูปกรณ์และ เทคโนโลยีเพื่อการศึกษา",department:"บริหารงานทั่วไป",budget_total:60000,owner:"นางสาวสุดารัตน์  สร้อยสน",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:25,project_code:"25/2569",project_name:"โครงการเรียนดีเรียนฟรีอย่างมีคุณภาพ",department:"บริหารงานวิชาการ",budget_total:0,owner:"นางสาวนิภาพร  คำเพราะ",description:"งบประมาณตามยอดนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:26,project_code:"26/2569",project_name:"โครงการห้องเรียนคุณภาพ",department:"บริหารงานวิชาการ",budget_total:65000,owner:"นางสาวนิภาพร  คำเพราะ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:27,project_code:"27/2569",project_name:"โครงการโรงเรียนปลอดขยะ",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางสาวนิภาพร  คำเพราะ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:28,project_code:"28/2569",project_name:"โครงการพัฒนาทักษะศิลปะดนตรีกีฬา",department:"บริหารงานวิชาการ",budget_total:58000,owner:"ว่าที่ร้อยตรีปริดิพัทธ รักพรหม",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:29,project_code:"29/2569",project_name:"โครงการจัดหาและซ่อมบำรุงวัสดุอุปกรณ์คุรุภัณฑ์ทางการศึกษา",department:"บริหารงานงบประมาณ",budget_total:50000,owner:"ว่าที่ร้อยตรีปริดิพัทธ รักพรหม",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:30,project_code:"30/2569",project_name:"โครงการ วัสดุสำนักงาน",department:"บริหารงานงบประมาณ",budget_total:80000,owner:"นายปรมินทร์  ทาเสนาะ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:31,project_code:"31/2569",project_name:"โครงการงานระบบสาธารณูปโภค",department:"บริหารงานงบประมาณ",budget_total:90000,owner:"นายปรมินทร์  ทาเสนาะ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:32,project_code:"32/2569",project_name:"โครงการส่งเสริมการจัดการศึกษาปฐมวัย",department:"บริหารงานวิชาการ",budget_total:65000,owner:"นางนพมาศ  นวลศิริ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:33,project_code:"33/2569",project_name:"โครงการระดมทรัพยากรเพื่อการศึกษา",department:"บริหารงานงบประมาณ",budget_total:10000,owner:"นางนพมาศ  นวลศิริ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:34,project_code:"34/2569",project_name:"โครงการบ้านวิทยาศาสตร์น้อย",department:"บริหารงานวิชาการ",budget_total:8000,owner:"นางนพมาศ  นวลศิริ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:35,project_code:"35/2569",project_name:"โครงการพัฒนาอาคารสถานที่เพื่อการจัดการเรียนรู้",department:"บริหารงานทั่วไป",budget_total:65000,owner:"นางจันทร์มา  ทำนุ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:36,project_code:"36/2569",project_name:"โครงการร่วมพัฒนาเครือข่ายคุณภาพการศึกษา",department:"บริหารงานทั่วไป",budget_total:20000,owner:"นางจันทร์มา  ทำนุ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:37,project_code:"37/2569",project_name:"โครงการโรงเรียนส่งเสริมสุขภาพ",department:"บริหารงานทั่วไป",budget_total:16000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:38,project_code:"38/2569",project_name:"โครงการพัฒนาระบบสำนักงานและธุรการโรงเรียน",department:"บริหารงานทั่วไป",budget_total:15000,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:39,project_code:"39/2569",project_name:"โครงการอาหารกลางวันและโภชนาการ",department:"บริหารงานทั่วไป",budget_total:0,owner:"นางสาวธนันท์นภัส บุญค้ำ",description:"งบประมาณตามยอดนักเรียน",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:40,project_code:"40/2569",project_name:"โครงการสถานศึกษาปลอดภัย",department:"บริหารงานทั่วไป",budget_total:10000,owner:"นางสาวอรวรรณ บุญจันทร์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:41,project_code:"41/2569",project_name:"โครงการยุวเกษตรกร",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางสาวอรวรรณ บุญจันทร์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:42,project_code:"42/2569",project_name:"โครงการกิจการนักเรียน",department:"บริหารงานทั่วไป",budget_total:4000,owner:"นางสาวอรวรรณ บุญจันทร์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:43,project_code:"43/2569",project_name:"โครงการน้อมนำพระบรมราโชบายด้านการศึกษาสู่การปฏิบัติ",department:"บริหารงานทั่วไป",budget_total:40000,owner:"นางสาววิจิตรา  ไชยพิมพ์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:44,project_code:"44/2569",project_name:"โครงการพัฒนาแหล่งเรียนรู้ในโรงเรียน",department:"บริหารงานวิชาการ",budget_total:80000,owner:"นางสาววิจิตรา  ไชยพิมพ์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:45,project_code:"45/2569",project_name:"โครงการอีโคสคูล",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางสาววิจิตรา  ไชยพิมพ์",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:46,project_code:"46/2569",project_name:"โครงการพัฒนาระบบการบริหารจัดการการศึกษา",department:"บริหารงานทั่วไป",budget_total:5000,owner:"นางนุชรินทร์ ธิประเทศ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"},
+            {id:47,project_code:"47/2569",project_name:"โครงการตอบสนองตามนโยบาย",department:"บริหารงานทั่วไป",budget_total:40000,owner:"นางนุชรินทร์ ธิประเทศ",description:"",fiscal_year:"2569",progress_percent:0,status:"กำลังดำเนินการ"}
         ];
 
         activities = [
-            {id:1,project_id:1,activity_name:"ค่าอาหารกลางวันและอาหารว่างการประชุม",budget:800},
-            {id:2,project_id:1,activity_name:"ค่าเอกสารการประเมินผลหลักสูตร",budget:200},
-            {id:3,project_id:2,activity_name:"ค่าดำเนินการประชุมคณะทำงาน",budget:800},
-            {id:4,project_id:2,activity_name:"ค่าเอกสารการดำเนินงาน",budget:200},
-            {id:5,project_id:2,activity_name:"ค่าประชุม อบรมเตรียมการประเมินภายนอก",budget:1500},
-            {id:6,project_id:2,activity_name:"ค่าจัดทำเอกสารตามตัวชี้วัด",budget:1000},
-            {id:7,project_id:4,activity_name:"ค่าจัดซื้อเอกสารประกอบการเรียน",budget:10000},
-            {id:8,project_id:4,activity_name:"ค่ากิจกรรมยกระดับผลสัมฤทธิ์",budget:5000},
-            {id:9,project_id:4,activity_name:"ค่าวัสดุฝึก",budget:2000},
-            {id:10,project_id:9,activity_name:"ค่าสมัครแข่งขัน/ค่าเดินทาง",budget:50000},
-            {id:11,project_id:9,activity_name:"ค่าวัสดุอุปกรณ์ฝึกซ้อม",budget:20000},
-            {id:12,project_id:10,activity_name:"กิจกรรมลูกเสือ-เนตรนารี",budget:40000},
-            {id:13,project_id:10,activity_name:"กิจกรรมชุมนุม",budget:15000},
-            {id:14,project_id:10,activity_name:"กิจกรรมจิตอาสา",budget:10000},
-            {id:15,project_id:10,activity_name:"กิจกรรมวันสำคัญ",budget:60000},
+            {id:1,project_id:3,activity_name:"กิจกรรมเปิดบ้านวิชาการ",budget:6000},
+            {id:2,project_id:3,activity_name:"กิจกรรมพัฒนากลุ่มสาระการเรียนรู้",budget:15000},
+            {id:3,project_id:4,activity_name:"กิจกรรมพัฒนาการประเมินระดับชาติ",budget:10000},
+            {id:4,project_id:4,activity_name:"กิจกรรมส่งเสริมการอ่านและรักษ์ภาษไทย",budget:3000},
+            {id:5,project_id:4,activity_name:"กิจกรรมขับเคลื่อนการพัฒนาสมรรถนะผู้เรียนตามมาตรฐานสากล pisa",budget:3000},
+            {id:6,project_id:4,activity_name:"กิจกรรมพัฒนาทักษะภาษาและภาษาอังกฤษเพื่อการสื่อสาร",budget:3000},
+            {id:7,project_id:4,activity_name:"กิจกรรมสอนซ่อมเสริม",budget:1000},
+            {id:8,project_id:5,activity_name:"กิจกรรมค่ายคุณธรรม",budget:3000},
+            {id:9,project_id:5,activity_name:"กิจกรรมโรงเรียนศีล 5",budget:1000},
+            {id:10,project_id:5,activity_name:"กิจกรรมโครงงานคุณธรรม",budget:3000},
+            {id:11,project_id:6,activity_name:"กิจกรรม1ครู1นวัตกรรม",budget:500},
+            {id:12,project_id:6,activity_name:"กิจกรรมผลิตสื่อการเรียนรู้",budget:10000},
+            {id:13,project_id:6,activity_name:"กิจกรรมเผยแพร่และแสดงผลงาน",budget:2000},
+            {id:14,project_id:6,activity_name:"กิจกรรมวิจัยในชั้นเรียน",budget:500},
+            {id:15,project_id:8,activity_name:"กิจกรรมตามน้องกลับมาเรียน",budget:500},
+            {id:16,project_id:8,activity_name:"กิจกรรมแนะแนว",budget:500},
+            {id:17,project_id:9,activity_name:"กิจกรรมแข่งขันทักษะวิชาการ",budget:80000},
+            {id:18,project_id:9,activity_name:"กิจกรรมส่งเสริมศักยภาพผู้เรียน",budget:10000},
+            {id:19,project_id:10,activity_name:"กิจกรรมชมรม",budget:15000},
+            {id:20,project_id:10,activity_name:"กิจกรรมทัศนศึกษาเรียนรู้สู่โลกกว้าง",budget:100000},
+            {id:21,project_id:10,activity_name:"กิจกรรมศาสตร์พระราชา",budget:5000},
+            {id:22,project_id:10,activity_name:"กิจกรรมลูกเสือเนตรนารี",budget:30000},
+            {id:23,project_id:10,activity_name:"กิจกรรม spot day",budget:5000},
+            {id:24,project_id:11,activity_name:"กิจกรรมจัดทำแผน IEP",budget:1000},
+            {id:25,project_id:19,activity_name:"กิจกรรม ประชุม อบรม ส่งเสริมศักยภาพครูและบุคลากรทางการศึกษา",budget:20000},
+            {id:26,project_id:19,activity_name:"กิจกรรมชุมชนแห่งการเรียนรู้ทางวิชาชีพ PLC",budget:2000},
+            {id:27,project_id:19,activity_name:"กิจกรรมศึกษาดูงาน",budget:35000},
+            {id:28,project_id:20,activity_name:"กิจกรรมเยี่ยมบ้านนักเรียน",budget:2500},
+            {id:29,project_id:20,activity_name:"กิจกรรมระบบดูแลช่วยเหลือ",budget:500},
+            {id:30,project_id:20,activity_name:"กิจกรรมการส่งเสริมความประพฤติและวินัยนักเรียน",budget:500},
+            {id:31,project_id:21,activity_name:"กิจกรรมวันเด็ก",budget:4000},
+            {id:32,project_id:21,activity_name:"กิจกรรมวันครู",budget:3000},
+            {id:33,project_id:21,activity_name:"กิจกรรมวันสำคัญทางศาสนา",budget:3000},
+            {id:34,project_id:21,activity_name:"กิจกรรมวันไหว้ครู",budget:3000},
+            {id:35,project_id:21,activity_name:"กิจกรรมวันสุนทรภู่/ภาษาไทย",budget:3500},
+            {id:36,project_id:21,activity_name:"กิจกรรมวันแม่แห่งชาติ",budget:3500},
+            {id:37,project_id:21,activity_name:"กิจกรรมวันวิทยาศาสตร์",budget:5000},
+            {id:38,project_id:21,activity_name:"กิจกรรมวันเฉลิมพระชนมพรรษา",budget:3500},
+            {id:39,project_id:21,activity_name:"กิจกรรมวันสำคัญสากล",budget:3500},
+            {id:40,project_id:21,activity_name:"กิจกรรมวันสถาปนาลูกเสือ/วันธีรราชเจ้า",budget:3000},
+            {id:41,project_id:21,activity_name:"กิจกรรมวันปัจฉิมนิเทศ",budget:5000},
+            {id:42,project_id:28,activity_name:"กิจกรรมกีฬาสัมพันธ์",budget:30000},
+            {id:43,project_id:28,activity_name:"กิจกรรมทัศนศิลป์",budget:3000},
+            {id:44,project_id:28,activity_name:"กิจกรรมพัฒนาดนตรีและดุริยางค์",budget:20000},
+            {id:45,project_id:28,activity_name:"กิจกรรมส่งเสริมกีฬาฟุตบอล",budget:5000},
+            {id:46,project_id:32,activity_name:"กิจกรรมเสริมสร้างพัฒนาการสมวัย",budget:20000},
+            {id:47,project_id:32,activity_name:"กิจกรรมพัฒนาสนามเด็กเล่นปลอดภัย",budget:45000},
+            {id:48,project_id:34,activity_name:"กิจกรรมบ้านวิทยาศาสตร์น้อย(ปฐมวัย)",budget:4000},
+            {id:49,project_id:34,activity_name:"กิจกรรมบ้านนักวิทยาศาสตร์น้อย(ประถมศึกษา)",budget:4000},
+            {id:50,project_id:35,activity_name:"กิจกรรมพัฒนาอาคารสถานที่เพื่อการจัดการเรียนรู้",budget:50000},
+            {id:51,project_id:35,activity_name:"กิจกรรมพัฒนาระบบสาธารณูปโภค",budget:10000},
+            {id:52,project_id:35,activity_name:"กิจกรรมสุขาดีมีความสุข",budget:5000},
+            {id:53,project_id:36,activity_name:"กิจกรรมเครือข่ายสถานศึกษา",budget:5000},
+            {id:54,project_id:36,activity_name:"กิจกรรมสานสัมพันธ์ชุมชนและเครือข่ายผู้ปกครอง",budget:5000},
+            {id:55,project_id:36,activity_name:"กิจกรรมส่งเสริมพัฒนากิจกรรมคณะกรรมการสถานศึกษา",budget:15000},
+            {id:56,project_id:37,activity_name:"กิจกรรม อย.น้อย",budget:1000},
+            {id:57,project_id:37,activity_name:"กิจกรรมผู้พิทักษ์ฟันดี",budget:1000},
+            {id:58,project_id:37,activity_name:"กิจกรรมอบรมส่งเสริมสุขภาพ",budget:2000},
+            {id:59,project_id:37,activity_name:"กิจกรรมรณรงค์ป้องกันโรคติดต่อ",budget:1500},
+            {id:60,project_id:37,activity_name:"กิจกรรมโรงอาหารถูกสุขลักษณะ",budget:5000},
+            {id:61,project_id:37,activity_name:"กิจกรรมพัฒนาห้องพยาบาลปลอดภัย",budget:5000},
+            {id:62,project_id:37,activity_name:"กิจกรรมส่งเสริมสุขภาพทางกาย",budget:500},
+            {id:63,project_id:38,activity_name:"กิจกรรมงานธุรการ",budget:5000},
+            {id:64,project_id:38,activity_name:"กิจกรรมงานสำมะโนนักเรียน",budget:1000},
+            {id:65,project_id:38,activity_name:"กิจกรรมงานปฏิคมและการต้อนรับ",budget:9000},
+            {id:66,project_id:40,activity_name:"กิจกรรมอบรมพัฒนาให้ความรู้",budget:3000},
+            {id:67,project_id:40,activity_name:"กิจกรรมรณรงค์ป้องกัน",budget:2000},
+            {id:68,project_id:40,activity_name:"กิจกรรมจัดหาวัสดุอุปกรณ์เพื่อลดความเสี่ยง",budget:4000},
+            {id:69,project_id:40,activity_name:"กิจกรรมจราจรปลอดภัย",budget:1000},
+            {id:70,project_id:42,activity_name:"กิจกรรมส่งเสริมกิจกรรมนักเรียน",budget:2000},
+            {id:71,project_id:42,activity_name:"กิจกรรมประชาธิปไตยในโรงเรียน",budget:2000},
+            {id:72,project_id:43,activity_name:"กิจกรรมเศรษฐกิจพอเพียงในสถานศึกษา",budget:5000},
+            {id:73,project_id:43,activity_name:"กิจกรรมส่งเสริมทักษะอาชีพ",budget:7000},
+            {id:74,project_id:43,activity_name:"กิจกรรมเสริมสร้างทักษะการดำรงชีวิตในศตวรรษที่ 21",budget:2000},
+            {id:75,project_id:43,activity_name:"กิจกรรมเสริมสร้างทัศนคติที่ถูกต้องต่อบ้านเมือง",budget:2000},
+            {id:76,project_id:43,activity_name:"กิจกรรมการส่งเสริมความรักและธำรงสถาบันหลักของชาติ",budget:2000},
+            {id:77,project_id:43,activity_name:"กิจกรรมการส่งเสริมศิลปะนาฏศิลป์วัฒนธรรมไทย และภูมิปัญญาท้องถิ่น",budget:20000},
+            {id:78,project_id:43,activity_name:"กิจกรรมพัฒนางานสหกรณ์โรงเรียน",budget:2000},
+            {id:79,project_id:44,activity_name:"กิจกรรมพัฒนาห้องพหุปัญญา",budget:35000},
+            {id:80,project_id:44,activity_name:"กิจกรรมพัฒนาห้องสมุด",budget:5000},
+            {id:81,project_id:44,activity_name:"กิจกรรมพัฒนาแหล่งเรียนรู้บูรณาการ",budget:30000},
+            {id:82,project_id:44,activity_name:"กิจกรรมพัฒนาห้องปฏิบัติการวิทยาศาสตร์",budget:10000},
+            {id:83,project_id:46,activity_name:"กิจกรรมพัฒนางานงบประมาณ การเงินบัญชีและพัสดุ",budget:1000},
+            {id:84,project_id:46,activity_name:"กิจกรรมพัฒนาระบบงานบุคคล",budget:1000},
+            {id:85,project_id:46,activity_name:"กิจกรรมพัฒนาระบบงานวิชาการ",budget:1000},
+            {id:86,project_id:46,activity_name:"กิจกรรมพัฒนาระบบงานบริหารทั่วไป",budget:1000},
+            {id:87,project_id:46,activity_name:"กิจกรรมตรวจสอบภายในและบริหารความเสี่ยง",budget:1000}
         ];
 
         payments = [];
@@ -591,7 +655,7 @@
     }
 
     function parseProjectCode(code) {
-        const match = code.match(/(\d+)/);
+        const match = String(code || '').match(/(\d+)/);
         return match ? parseInt(match[1]) : 0;
     }
 
@@ -1018,13 +1082,17 @@
             }
         }
 
-        await fetchData();
+        // Optimistically add to local payments array so UI updates immediately
+        const tempId = payments.length > 0 ? Math.max(...payments.map(p => Number(p.id))) + 1 : 1;
+        const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: nowStr, note: note || '' });
+        updateUI();
 
         msgEl.textContent = 'บันทึกสำเร็จ!';
         msgEl.className = 'text-sm text-center text-green-600 font-medium'; msgEl.classList.remove('hidden');
         btn.disabled = false; btn.textContent = 'บันทึกรายการเบิกจ่าย';
 
-        setTimeout(() => { closeQuickPayModal(); }, 1000);
+        setTimeout(() => { closeQuickPayModal(); if (API_URL) fetchData(); }, 1000);
     }
 
     // ============================================================
@@ -1214,7 +1282,11 @@
             }
         }
 
-        await fetchData();
+        // Optimistically add to local payments array so UI updates immediately
+        const tempId = payments.length > 0 ? Math.max(...payments.map(p => Number(p.id))) + 1 : 1;
+        const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
+        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: nowStr, note: note || '' });
+        updateUI();
 
         msgEl.textContent = 'บันทึกสำเร็จ!';
         msgEl.className = 'text-sm text-center text-green-600 font-medium'; msgEl.classList.remove('hidden');
@@ -1222,6 +1294,7 @@
         document.getElementById('payRequester').value = '';
         document.getElementById('payNote').value = '';
         btn.disabled = false; btn.textContent = 'บันทึกรายการเบิกจ่าย';
+        if (API_URL) fetchData();
         setTimeout(() => msgEl.classList.add('hidden'), 3000);
     }
 
