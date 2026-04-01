@@ -39,7 +39,7 @@
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-primary-600 rounded-xl flex items-center justify-center text-white font-bold text-lg sm:text-xl">ผ</div>
                     <div>
                         <h1 class="text-lg sm:text-xl font-bold text-gray-800">ระบบติดตามงบประมาณโครงการ</h1>
-                        <p class="text-xs sm:text-sm text-gray-500">โรงเรียนบ้านผึ้ง(มธุลีห์ประชาสรรค์) <span id="headerFiscalYear">ปีงบประมาณ 2569</span></p>
+                        <p class="text-xs sm:text-sm text-gray-500">โรงเรียนบ้านผึ้ง(มธุลีห์ประชาสรรค์) <span id="headerFiscalYear">ปีการศึกษา 2569</span></p>
                     </div>
                 </div>
                 <div id="headerControls" class="flex items-center gap-2">
@@ -59,7 +59,7 @@
     <div id="publicBanner" class="hidden bg-gradient-to-r from-primary-600 to-accent-600 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center">
             <h1 class="text-2xl sm:text-3xl font-bold mb-1">งบประมาณโรงเรียนบ้านผึ้ง(มธุลีห์ประชาสรรค์)</h1>
-            <p class="text-sm sm:text-base opacity-90" id="publicSubtitle">ปีงบประมาณ 2569 | เปิดเผยข้อมูลเพื่อความโปร่งใส (ITA)</p>
+            <p class="text-sm sm:text-base opacity-90" id="publicSubtitle">ปีการศึกษา 2569 | เปิดเผยข้อมูลเพื่อความโปร่งใส (ITA)</p>
             <p class="text-xs opacity-70 mt-2" id="publicTimestamp"></p>
         </div>
     </div>
@@ -136,7 +136,7 @@
                 </select>
                 <select id="yearFilter" onchange="filterProjects()"
                     class="px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white">
-                    <option value="">ทุกปีงบประมาณ</option>
+                    <option value="">ทุกปีการศึกษา</option>
                 </select>
                 <select id="statusFilter" onchange="filterProjects()"
                     class="px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none bg-white">
@@ -170,7 +170,7 @@
     <!-- Fiscal Year Summary (hidden by default, toggled) -->
     <section id="yearSummarySection" class="max-w-7xl mx-auto px-4 sm:px-6 pb-8 hidden">
         <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-            <h3 class="text-lg font-bold text-gray-800 mb-4">สรุปปีงบประมาณ</h3>
+            <h3 class="text-lg font-bold text-gray-800 mb-4">สรุปปีการศึกษา</h3>
             <div id="yearSummaryContent"></div>
         </div>
     </section>
@@ -204,6 +204,7 @@
                 </select>
                 <input type="number" id="quickPayAmount" placeholder="จำนวนเงิน (บาท)" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                 <input type="text" id="quickPayRequester" placeholder="ชื่อผู้เบิก" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
+                <input type="date" id="quickPayDate" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                 <input type="text" id="quickPayNote" placeholder="หมายเหตุ (ไม่บังคับ)" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                 <button onclick="submitQuickPayment()" id="quickPaySubmitBtn" class="w-full py-2.5 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-600 transition text-sm">บันทึกรายการเบิกจ่าย</button>
                 <p id="quickPayMsg" class="text-sm text-center hidden"></p>
@@ -485,7 +486,7 @@
         const years = [...new Set(projects.map(p => p.fiscal_year || '2569'))].sort();
         const select = document.getElementById('yearFilter');
         const currentVal = select.value;
-        select.innerHTML = '<option value="">ทุกปีงบประมาณ</option>';
+        select.innerHTML = '<option value="">ทุกปีการศึกษา</option>';
         years.forEach(y => {
             select.innerHTML += `<option value="${y}">ปี ${y}</option>`;
         });
@@ -1038,6 +1039,7 @@
         // Pre-fill owner
         document.getElementById('quickPayRequester').value = p.owner || '';
         document.getElementById('quickPayAmount').value = '';
+        document.getElementById('quickPayDate').value = new Date().toISOString().slice(0, 10);
         document.getElementById('quickPayNote').value = '';
         document.getElementById('quickPayMsg').classList.add('hidden');
         const btn = document.getElementById('quickPaySubmitBtn');
@@ -1058,18 +1060,19 @@
         const activityId = document.getElementById('quickPayActivity').value;
         const amount = document.getElementById('quickPayAmount').value;
         const requester = document.getElementById('quickPayRequester').value;
+        const payDate = document.getElementById('quickPayDate').value;
         const note = document.getElementById('quickPayNote').value;
         const msgEl = document.getElementById('quickPayMsg');
 
-        if (!amount || !requester) {
-            msgEl.textContent = 'กรุณากรอกจำนวนเงินและชื่อผู้เบิก';
+        if (!amount || !requester || !payDate) {
+            msgEl.textContent = 'กรุณากรอกจำนวนเงิน ชื่อผู้เบิก และวันที่';
             msgEl.className = 'text-sm text-center text-red-500'; msgEl.classList.remove('hidden'); return;
         }
 
         const btn = document.getElementById('quickPaySubmitBtn');
         btn.disabled = true; btn.textContent = 'กำลังบันทึก...';
 
-        const paymentData = { action: 'addPayment', project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, note };
+        const paymentData = { action: 'addPayment', project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: payDate, note };
 
         if (API_URL) {
             try {
@@ -1084,8 +1087,7 @@
 
         // Optimistically add to local payments array so UI updates immediately
         const tempId = payments.length > 0 ? Math.max(...payments.map(p => Number(p.id))) + 1 : 1;
-        const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
-        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: nowStr, note: note || '' });
+        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: payDate, note: note || '' });
         updateUI();
 
         msgEl.textContent = 'บันทึกสำเร็จ!';
@@ -1214,6 +1216,7 @@
                         </select>
                         <input type="number" id="payAmount" placeholder="จำนวนเงิน (บาท)" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                         <input type="text" id="payRequester" placeholder="ชื่อผู้เบิก" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
+                        <input type="date" id="payDate" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                         <input type="text" id="payNote" placeholder="หมายเหตุ (ไม่บังคับ)" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-primary-500">
                         <button onclick="submitPayment()" id="submitPayBtn" class="w-full py-2.5 bg-amber-500 text-white rounded-lg font-medium hover:bg-amber-600 transition text-sm">บันทึกรายการเบิกจ่าย</button>
                         <p id="paymentMsg" class="text-sm text-center hidden"></p>
@@ -1231,6 +1234,7 @@
             </div>`;
 
         const m = document.getElementById('adminModal'); m.classList.remove('hidden'); m.classList.add('flex');
+        document.getElementById('payDate').value = new Date().toISOString().slice(0, 10);
     }
 
     function closeAdminModal() { const m = document.getElementById('adminModal'); m.classList.add('hidden'); m.classList.remove('flex'); }
@@ -1258,18 +1262,19 @@
         const activityId = document.getElementById('payActivity').value;
         const amount = document.getElementById('payAmount').value;
         const requester = document.getElementById('payRequester').value;
+        const payDate = document.getElementById('payDate').value;
         const note = document.getElementById('payNote').value;
         const msgEl = document.getElementById('paymentMsg');
 
-        if (!projectId || !amount || !requester) {
-            msgEl.textContent = 'กรุณากรอกข้อมูลให้ครบ (โครงการ, จำนวนเงิน, ผู้เบิก)';
+        if (!projectId || !amount || !requester || !payDate) {
+            msgEl.textContent = 'กรุณากรอกข้อมูลให้ครบ (โครงการ, จำนวนเงิน, ผู้เบิก, วันที่)';
             msgEl.className = 'text-sm text-center text-red-500'; msgEl.classList.remove('hidden'); return;
         }
 
         const btn = document.getElementById('submitPayBtn');
         btn.disabled = true; btn.textContent = 'กำลังบันทึก...';
 
-        const paymentData = { action: 'addPayment', project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, note };
+        const paymentData = { action: 'addPayment', project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: payDate, note };
 
         if (API_URL) {
             try {
@@ -1284,14 +1289,14 @@
 
         // Optimistically add to local payments array so UI updates immediately
         const tempId = payments.length > 0 ? Math.max(...payments.map(p => Number(p.id))) + 1 : 1;
-        const nowStr = new Date().toISOString().replace('T', ' ').substring(0, 19);
-        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: nowStr, note: note || '' });
+        payments.push({ id: tempId, project_id: Number(projectId), activity_id: activityId ? Number(activityId) : '', amount: Number(amount), requester, date: payDate, note: note || '' });
         updateUI();
 
         msgEl.textContent = 'บันทึกสำเร็จ!';
         msgEl.className = 'text-sm text-center text-green-600 font-medium'; msgEl.classList.remove('hidden');
         document.getElementById('payAmount').value = '';
         document.getElementById('payRequester').value = '';
+        document.getElementById('payDate').value = new Date().toISOString().slice(0, 10);
         document.getElementById('payNote').value = '';
         btn.disabled = false; btn.textContent = 'บันทึกรายการเบิกจ่าย';
         if (API_URL) fetchData();
